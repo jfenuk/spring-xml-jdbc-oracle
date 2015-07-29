@@ -18,7 +18,7 @@ public class EmployeeDao {
 	}
 
 	public int saveEmployee(Employee e) {
-		String query = "insert into employee (id, name, salary) values('" + e.getId() + "','" + e.getName() + "','"
+		String query = "insert into employee (id, name, salary) values(seq_employee.nextval,'" + e.getName() + "','"
 				+ e.getSalary() + "')";
 		return jdbcTemplate.update(query);
 	}
