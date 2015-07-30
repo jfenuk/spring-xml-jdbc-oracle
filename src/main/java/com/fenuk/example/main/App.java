@@ -3,8 +3,8 @@ package com.fenuk.example.main;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.fenuk.example.dao.EmployeeDao;
 import com.fenuk.example.model.Employee;
+import com.fenuk.example.repository.EmployeeJdbcRepository;
 
 public class App {
 
@@ -12,10 +12,11 @@ public class App {
 
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		EmployeeDao dao = (EmployeeDao) context.getBean(EmployeeDao.class);
-		
-		dao.saveEmployee(new Employee("Alex", 35000L));
-		Employee e = dao.getEmployeeByName("Alex");
+		EmployeeJdbcRepository employeeRepository = (EmployeeJdbcRepository) context
+				.getBean(EmployeeJdbcRepository.class);
+
+		employeeRepository.save(new Employee("Alex", 35000L));
+		Employee e = employeeRepository.getByName("Alex");
 
 		System.out.println(e);
 	}

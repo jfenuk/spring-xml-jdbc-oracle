@@ -1,4 +1,4 @@
-package com.fenuk.example.dao;
+package com.fenuk.example.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.fenuk.example.model.Employee;
 
-public class EmployeeDao {
+public class EmployeeJdbcRepository {
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -17,26 +17,26 @@ public class EmployeeDao {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public int saveEmployee(Employee e) {
+	public int save(Employee e) {
 		String query = "insert into employee (id, name, salary) values(seq_employee.nextval,'" + e.getName() + "','"
 				+ e.getSalary() + "')";
 		return jdbcTemplate.update(query);
 	}
 
-	public int updateEmployee(Employee e) {
+	public int update(Employee e) {
 
 		String query = "update employee set name='" + e.getName() + "',salary='" + e.getSalary() + "' where id='"
 				+ e.getId() + "'";
 		return jdbcTemplate.update(query);
 	}
 
-	public int deleteEmployee(Employee e) {
+	public int delete(Employee e) {
 
 		String query = "delete from employee where id='" + e.getId() + "'";
 		return jdbcTemplate.update(query);
 	}
 
-	public Employee getEmployeeById(int id) {
+	public Employee getById(int id) {
 
 		Employee e = this.jdbcTemplate.queryForObject("select id, name, salary from employee where id = ?",
 				new Object[] { id }, new RowMapper<Employee>() {
@@ -52,8 +52,8 @@ public class EmployeeDao {
 				});
 		return e;
 	}
-	
-	public Employee getEmployeeByName(String name) {
+
+	public Employee getByName(String name) {
 
 		Employee e = this.jdbcTemplate.queryForObject("select id, name, salary from employee where name = ?",
 				new Object[] { name }, new RowMapper<Employee>() {
