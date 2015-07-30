@@ -15,10 +15,16 @@ public class App {
 		EmployeeJdbcRepository employeeRepository = (EmployeeJdbcRepository) context
 				.getBean(EmployeeJdbcRepository.class);
 
-		employeeRepository.save(new Employee("Alex", 35000L));
-		Employee e = employeeRepository.getByName("Alex");
+		Employee e = new Employee("Alex", 35000L);
+		employeeRepository.save(e);
 
-		System.out.println(e);
+		e = employeeRepository.getByName("Alex");
+		e.setName("Eugene");
+	
+
+		employeeRepository.update(e);
+
+		employeeRepository.delete(e);
 	}
 
 }
